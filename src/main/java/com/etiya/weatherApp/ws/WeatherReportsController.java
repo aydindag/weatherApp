@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/weatherReports")
 public class WeatherReportsController {
-    private WeatherReportService weatherReportService;
+    private final WeatherReportService weatherReportService;
 
     @Autowired
     public WeatherReportsController(WeatherReportService weatherReportService) {

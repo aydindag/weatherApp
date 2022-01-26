@@ -18,4 +18,5 @@ public class CreateWeatherReportRequest {
 
     private String cityName;
     private String email;
+
 }

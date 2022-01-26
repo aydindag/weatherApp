@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,15 +34,17 @@ public class WeatherReportManager implements WeatherReportService {
     private final CityDao cityDao;
     private final UserDao userDao;
     private final WeatherApiCallService weatherApiCallService;
+    private final HttpServletRequest request;
 
 
     @Autowired
-    public WeatherReportManager(ModelMapperService modelMapperService, WeatherReportDao weatherReportDao, CityDao cityDao, UserDao userDao, WeatherApiCallService weatherApiCallService) {
+    public WeatherReportManager(ModelMapperService modelMapperService, WeatherReportDao weatherReportDao, CityDao cityDao, UserDao userDao, WeatherApiCallService weatherApiCallService, HttpServletRequest request) {
         this.modelMapperService = modelMapperService;
         this.weatherReportDao = weatherReportDao;
         this.cityDao = cityDao;
         this.userDao = userDao;
         this.weatherApiCallService = weatherApiCallService;
+        this.request = request;
     }
 
     @Override
@@ -69,10 +72,10 @@ public class WeatherReportManager implements WeatherReportService {
         User user  = userDao.findByEmail(createWeatherReportRequest.getEmail());
         weatherReport.setUser(user);
         weatherReport.setQueryDate(new java.util.Date());
-
-        executionTime.endTask();
+        weatherReport.setIpAddress(request.getLocalAddr());
         weatherReport.setQueryTime(executionTime.duration());
 
+        executionTime.endTask();
         this.weatherReportDao.save(weatherReport);
         return new SuccessResult("Weather added");
     }

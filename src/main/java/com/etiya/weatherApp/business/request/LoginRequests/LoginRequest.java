@@ -1,4 +1,4 @@
-package com.etiya.weatherApp.business.request.LoginAndRegisterRequests;
+package com.etiya.weatherApp.business.request.LoginRequests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

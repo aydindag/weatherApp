@@ -11,6 +11,7 @@ import com.etiya.weatherApp.core.utilities.results.*;
 import com.etiya.weatherApp.dataAccess.abstracts.UserDao;
 import com.etiya.weatherApp.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +21,14 @@ import java.util.stream.Collectors;
 public class UserManager implements UserService {
     private ModelMapperService modelMapperService;
     private UserDao userDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Autowired
-    public UserManager(ModelMapperService modelMapperService, UserDao userDao) {
+    public UserManager(ModelMapperService modelMapperService, UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.modelMapperService = modelMapperService;
         this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
@@ -45,6 +49,7 @@ public class UserManager implements UserService {
             return result;
         }
         User user = modelMapperService.forRequest().map(createUserRequest, User.class);
+        user.setPassword(this.bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
         this.userDao.save(user);
         return new SuccessResult("User added");
     }
@@ -69,6 +74,7 @@ public class UserManager implements UserService {
             return  result;
         }
         User user = modelMapperService.forRequest().map(updateUserRequest, User.class);
+        user.setPassword(this.bCryptPasswordEncoder.encode(updateUserRequest.getPassword()));
         this.userDao.save(user);
         return new SuccessResult("User updated");
     }
@@ -87,5 +93,13 @@ public class UserManager implements UserService {
             return  new SuccessResult();
         }
         return new ErrorResult("Couldn't find user according to this user id");
+    }
+
+    @Override
+    public DataResult<User> getByEmail(String email) {
+        if(this.userDao.existsByEmail(email)){
+            return new SuccessDataResult<User>(this.userDao.getByEmail(email));
+        }
+        return new ErrorDataResult<User>(null);
     }
 }

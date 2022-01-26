@@ -15,4 +15,5 @@ public interface WeatherReportService {
     Result save(CreateWeatherReportRequest createWeatherReportRequest);
     Result delete(DeleteWeatherReportRequest deleteWeatherReportRequest);
     Result update(UpdateWeatherReportRequest updateWeatherReportRequest);
+
 }
