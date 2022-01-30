@@ -43,7 +43,7 @@ public class UserManager implements UserService {
 
     @Override
     public Result save(CreateUserRequest createUserRequest) {
-        Result result = BusinessRules.run(exitsByEmail(createUserRequest.getEmail()));
+        Result result = BusinessRules.run(existsByEmail(createUserRequest.getEmail()));
 
         if(result != null){
             return result;
@@ -80,7 +80,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public Result exitsByEmail(String email) {
+    public Result existsByEmail(String email) {
         if(this.userDao.existsByEmail(email)){
             return new ErrorResult("This email already taken");
         }

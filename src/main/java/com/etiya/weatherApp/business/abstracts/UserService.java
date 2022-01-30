@@ -15,7 +15,7 @@ public interface UserService {
     Result save(CreateUserRequest createUserRequest);
     Result delete(DeleteUserRequest deleteUserRequest);
     Result update(UpdateUserRequest updateUserRequest);
-    Result exitsByEmail(String email);
+    Result existsByEmail(String email);
     Result exitsByUserId(String userId);
     DataResult<User> getByEmail(String email);
 }
