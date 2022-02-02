@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/cities")
+@CrossOrigin
 public class CitiesController {
     private CityService cityService;
 
@@ -33,9 +34,9 @@ public class CitiesController {
     return this.cityService.save(createCityRequest);
     }
 
-    @DeleteMapping("delete")
-    public  Result delete(@RequestBody @Valid DeleteCityRequest deleteCityRequest){
-        return this.cityService.delete(deleteCityRequest);
+    @DeleteMapping("delete/{cityId}")
+    public  Result delete(@PathVariable(name = "cityId") @Valid String cityId){
+        return this.cityService.delete(cityId);
     }
 
     @PutMapping("update")

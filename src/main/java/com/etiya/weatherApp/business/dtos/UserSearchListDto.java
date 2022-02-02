@@ -14,5 +14,5 @@ public class UserSearchListDto {
     private String firstName;
     private String lastName;
     private String password;
-    private boolean isAdmin;
+    private Boolean isAdmin;
 }

@@ -31,5 +31,5 @@ public class CreateUserRequest {
     private String lastName;
 
     @NotNull
-    private boolean isAdmin;
+    private Boolean isAdmin;
 }

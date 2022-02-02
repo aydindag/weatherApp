@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/weatherReports")
+@CrossOrigin
 public class WeatherReportsController {
     private final WeatherReportService weatherReportService;
 

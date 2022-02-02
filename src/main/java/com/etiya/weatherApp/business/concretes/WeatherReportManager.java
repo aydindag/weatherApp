@@ -56,7 +56,7 @@ public class WeatherReportManager implements WeatherReportService {
     }
 
     @Override
-    public Result save(CreateWeatherReportRequest createWeatherReportRequest) {
+    public DataResult<WeatherReportSearchListDto> save(CreateWeatherReportRequest createWeatherReportRequest) {
         ExecutionTime executionTime = new ExecutionTime(true);
         WeatherReport weatherReport = modelMapperService.forRequest().map(createWeatherReportRequest, WeatherReport.class);
 
@@ -77,7 +77,7 @@ public class WeatherReportManager implements WeatherReportService {
 
         executionTime.endTask();
         this.weatherReportDao.save(weatherReport);
-        return new SuccessResult("Weather added");
+        return new SuccessDataResult<>(modelMapperService.forRequest().map(weatherReport,WeatherReportSearchListDto.class),"success");
     }
 
     @Override

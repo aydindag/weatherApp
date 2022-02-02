@@ -3,7 +3,6 @@ package com.etiya.weatherApp.business.concretes;
 import com.etiya.weatherApp.business.abstracts.CityService;
 import com.etiya.weatherApp.business.dtos.CitySearchListDto;
 import com.etiya.weatherApp.business.request.cityRequests.CreateCityRequest;
-import com.etiya.weatherApp.business.request.cityRequests.DeleteCityRequest;
 import com.etiya.weatherApp.business.request.cityRequests.UpdateCityRequest;
 import com.etiya.weatherApp.core.utilities.business.BusinessRules;
 import com.etiya.weatherApp.core.utilities.mapping.ModelMapperService;
@@ -43,14 +42,14 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result delete(DeleteCityRequest deleteCityRequest) {
-        Result result = BusinessRules.run(existByCityId(deleteCityRequest.getCityId()));
+    public Result delete(String cityId) {
+        Result result = BusinessRules.run(existByCityId(cityId));
 
         if(result != null){
             return  result;
         }
-        City city = modelMapperService.forRequest().map(deleteCityRequest, City.class);
-        this.cityDao.delete(city);
+
+        this.cityDao.deleteById(cityId);
         return new SuccessResult("City deleted");
     }
 

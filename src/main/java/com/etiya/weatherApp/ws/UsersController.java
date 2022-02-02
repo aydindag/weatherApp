@@ -33,11 +33,11 @@ public class UsersController {
     }
 
     @PostMapping("add")
-    public Result add(@RequestBody @Valid CreateUserRequest createUserRequest, HttpServletRequest request){
+    public Result add(@RequestBody @Valid CreateUserRequest createUserRequest){
         return this.userService.save(createUserRequest);
     }
 
-    @DeleteMapping("delete")
+    @PostMapping("delete")
     public Result delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest){
         return this.userService.delete(deleteUserRequest);
     }
