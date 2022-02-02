@@ -2,6 +2,7 @@ package com.etiya.weatherApp.business.abstracts;
 
 
 import com.etiya.weatherApp.business.dtos.WeatherReportSearchListDto;
+import com.etiya.weatherApp.business.dtos.WeatherReportsFilterDto;
 import com.etiya.weatherApp.business.request.weatherReportRequests.CreateWeatherReportRequest;
 import com.etiya.weatherApp.business.request.weatherReportRequests.DeleteWeatherReportRequest;
 import com.etiya.weatherApp.business.request.weatherReportRequests.UpdateWeatherReportRequest;
@@ -16,5 +17,5 @@ public interface WeatherReportService {
     DataResult<WeatherReportSearchListDto> save(CreateWeatherReportRequest createWeatherReportRequest);
     Result delete(DeleteWeatherReportRequest deleteWeatherReportRequest);
     Result update(UpdateWeatherReportRequest updateWeatherReportRequest);
-
+    DataResult<List<WeatherReportSearchListDto>> getWeatherReportsWithFilter(WeatherReportsFilterDto request);
 }

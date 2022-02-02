@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserService {
     DataResult<List<UserSearchListDto>> getAll();
     Result save(CreateUserRequest createUserRequest);
-    Result delete(DeleteUserRequest deleteUserRequest);
+    Result delete(String userId);
     Result update(UpdateUserRequest updateUserRequest);
     Result existsByEmail(String email);
     Result exitsByUserId(String userId);

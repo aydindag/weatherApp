@@ -37,9 +37,9 @@ public class UsersController {
         return this.userService.save(createUserRequest);
     }
 
-    @PostMapping("delete")
-    public Result delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest){
-        return this.userService.delete(deleteUserRequest);
+    @DeleteMapping("delete/{userId}")
+    public Result delete(@PathVariable(name = "userId") @Valid String userId){
+        return this.userService.delete(userId);
     }
 
     @PutMapping("update")

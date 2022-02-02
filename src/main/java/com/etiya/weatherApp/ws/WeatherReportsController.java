@@ -2,6 +2,7 @@ package com.etiya.weatherApp.ws;
 
 import com.etiya.weatherApp.business.abstracts.WeatherReportService;
 import com.etiya.weatherApp.business.dtos.WeatherReportSearchListDto;
+import com.etiya.weatherApp.business.dtos.WeatherReportsFilterDto;
 import com.etiya.weatherApp.business.request.weatherReportRequests.CreateWeatherReportRequest;
 import com.etiya.weatherApp.business.request.weatherReportRequests.DeleteWeatherReportRequest;
 import com.etiya.weatherApp.business.request.weatherReportRequests.UpdateWeatherReportRequest;
@@ -42,5 +43,10 @@ public class WeatherReportsController {
     @PutMapping("update")
     public  Result update(@RequestBody @Valid UpdateWeatherReportRequest updateWeatherReportRequest){
         return  this.weatherReportService.update(updateWeatherReportRequest);
+    }
+
+    @PostMapping("getWeatherReportsWithFilter")
+    public DataResult<List<WeatherReportSearchListDto>> getWeatherReportsWithFilter(@RequestBody WeatherReportsFilterDto request){
+        return   this.weatherReportService.getWeatherReportsWithFilter(request);
     }
 }

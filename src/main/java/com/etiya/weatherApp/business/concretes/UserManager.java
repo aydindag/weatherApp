@@ -55,14 +55,13 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public Result delete(DeleteUserRequest deleteUserRequest) {
-        Result result = BusinessRules.run(exitsByUserId(deleteUserRequest.getUserId()));
+    public Result delete(String userId) {
+        Result result = BusinessRules.run(exitsByUserId(userId));
 
         if(result != null){
             return  result;
         }
-        User user = modelMapperService.forRequest().map(deleteUserRequest, User.class);
-        this.userDao.delete(user);
+        this.userDao.deleteById(userId);
         return new SuccessResult("User deleted");
     }
 

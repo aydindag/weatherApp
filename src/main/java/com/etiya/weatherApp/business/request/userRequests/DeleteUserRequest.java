@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeleteUserRequest {
-
     @NotNull
     private String userId;
 }
