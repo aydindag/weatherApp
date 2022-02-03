@@ -1,6 +1,7 @@
 package com.etiya.weatherApp.business.concretes;
 
 import com.etiya.weatherApp.business.abstracts.UserService;
+import com.etiya.weatherApp.business.dtos.UserDto;
 import com.etiya.weatherApp.business.dtos.UserSearchListDto;
 import com.etiya.weatherApp.business.request.userRequests.CreateUserRequest;
 import com.etiya.weatherApp.business.request.userRequests.DeleteUserRequest;
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserManager implements UserService {
-    private ModelMapperService modelMapperService;
-    private UserDao userDao;
+    private final ModelMapperService modelMapperService;
+    private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -38,20 +39,20 @@ public class UserManager implements UserService {
         List<User> result = userDao.findAll();
         List<UserSearchListDto> response = result.stream().map(user -> modelMapperService.forDto()
                 .map(user, UserSearchListDto.class)).collect(Collectors.toList());
-        return new SuccessDataResult<List<UserSearchListDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public Result save(CreateUserRequest createUserRequest) {
+    public DataResult<UserSearchListDto> save(CreateUserRequest createUserRequest) {
         Result result = BusinessRules.run(existsByEmail(createUserRequest.getEmail()));
 
         if(result != null){
-            return result;
+            return new ErrorDataResult<User>(null,"This email already taken");
         }
         User user = modelMapperService.forRequest().map(createUserRequest, User.class);
         user.setPassword(this.bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
-        this.userDao.save(user);
-        return new SuccessResult("User added");
+        User newUser = this.userDao.save(user);
+        return new SuccessDataResult<>(modelMapperService.forRequest().map(newUser,UserSearchListDto.class));
     }
 
     @Override
@@ -97,7 +98,7 @@ public class UserManager implements UserService {
     @Override
     public DataResult<User> getByEmail(String email) {
         if(this.userDao.existsByEmail(email)){
-            return new SuccessDataResult<User>(this.userDao.getByEmail(email));
+            return new SuccessDataResult<>(this.userDao.getByEmail(email));
         }
         return new ErrorDataResult<User>(null);
     }

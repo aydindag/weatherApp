@@ -30,7 +30,7 @@ public class CitiesController {
     }
 
     @PostMapping("add")
-    public Result add(@RequestBody @Valid CreateCityRequest createCityRequest){
+    public DataResult<CitySearchListDto>  add(@RequestBody @Valid CreateCityRequest createCityRequest){
     return this.cityService.save(createCityRequest);
     }
 

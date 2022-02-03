@@ -33,7 +33,7 @@ public class UsersController {
     }
 
     @PostMapping("add")
-    public Result add(@RequestBody @Valid CreateUserRequest createUserRequest){
+    public DataResult<UserSearchListDto> add(@RequestBody @Valid CreateUserRequest createUserRequest){
         return this.userService.save(createUserRequest);
     }
 

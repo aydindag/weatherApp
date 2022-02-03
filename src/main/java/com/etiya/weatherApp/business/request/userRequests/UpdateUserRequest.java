@@ -28,5 +28,5 @@ public class UpdateUserRequest {
     private String lastName;
 
     @NotNull
-    private boolean isAdmin;
+    private Boolean isAdmin;
 }

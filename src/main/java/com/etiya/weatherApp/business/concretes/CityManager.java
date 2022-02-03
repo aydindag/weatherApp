@@ -35,10 +35,10 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result save(CreateCityRequest createCityRequest) {
+    public DataResult<CitySearchListDto>  save(CreateCityRequest createCityRequest) {
         City city = modelMapperService.forRequest().map(createCityRequest, City.class);
-        this.cityDao.save(city);
-        return new SuccessResult("City added");
+        City newcity= this.cityDao.save(city);
+        return new SuccessDataResult<CitySearchListDto>(modelMapperService.forRequest().map(newcity,CitySearchListDto.class));
     }
 
     @Override

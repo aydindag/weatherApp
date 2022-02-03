@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CityService {
     DataResult<List<CitySearchListDto>> getAll();
-    Result save(CreateCityRequest createCityRequest);
+    DataResult<CitySearchListDto> save(CreateCityRequest createCityRequest);
     Result delete(String cityId);
     Result update(UpdateCityRequest updateCityRequest);
     Result existByCityId(String cityId);

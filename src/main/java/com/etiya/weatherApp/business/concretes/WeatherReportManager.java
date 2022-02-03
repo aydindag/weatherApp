@@ -75,14 +75,12 @@ public class WeatherReportManager implements WeatherReportService {
 
         weatherReport.setCity(city);
 
-        //User user  = userDao.findByEmail(createWeatherReportRequest.getEmail());
-        User user = userDao.findByEmail("aydin@aydin.com");
+        User user = userDao.findByEmail(createWeatherReportRequest.getEmail());
         weatherReport.setUser(user);
         weatherReport.setQueryDate(new java.util.Date());
-        weatherReport.setIpAddress(request.getLocalAddr());
-        weatherReport.setQueryTime(executionTime.duration());
-
+        weatherReport.setIpAddress(request.getRemoteAddr());
         executionTime.endTask();
+        weatherReport.setQueryTime(executionTime.duration());
         this.weatherReportDao.save(weatherReport);
         return new SuccessDataResult<>(modelMapperService.forRequest().map(weatherReport, WeatherReportSearchListDto.class), "success");
     }
