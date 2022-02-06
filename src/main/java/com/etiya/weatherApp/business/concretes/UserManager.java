@@ -73,8 +73,13 @@ public class UserManager implements UserService {
         if(result != null){
             return  result;
         }
+        User user1 = this.userDao.findById(updateUserRequest.getUserId()).orElse(null);
+        if(user1 == null){
+            return new ErrorResult("User not found");
+        }
         User user = modelMapperService.forRequest().map(updateUserRequest, User.class);
-        user.setPassword(this.bCryptPasswordEncoder.encode(updateUserRequest.getPassword()));
+
+        user.setPassword(user1.getPassword());
         this.userDao.save(user);
         return new SuccessResult("User updated");
     }

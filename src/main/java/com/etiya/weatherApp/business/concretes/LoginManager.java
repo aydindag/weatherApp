@@ -44,7 +44,7 @@ public class LoginManager implements LoginService {
     private Result checkUserByPassword(LoginRequest loginRequest){
         User user = this.userService.getByEmail(loginRequest.getEmail()).getData();
         if (user == null){
-            return new ErrorResult("Wrong Emaill");
+            return new ErrorResult("Wrong Email");
         }
 
         if(!this.bCryptPasswordEncoder.matches(loginRequest.getPassword(), user.getPassword())){

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j //konsola düşen log info görmek için
 public class WeatherApiCallManager implements WeatherApiCallService {
-    private  RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public WeatherApiCallManager(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
